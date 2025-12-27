@@ -10,10 +10,29 @@ from sqlmodel import Field
 class User(SQLModel,table=True):
     __tablename__ = "user"
     id:int = Field(default=None, primary_key=True)
-    username: int
+    username: str
     password: str
     email:str
-    name:str
-    age:int
+
+class Chat(SQLModel,table=True):
+    __tablename__ = "chat"
+    id:int = Field(default=None, primary_key=True)
+    user_id:int = Field(foreign_key="user.id")
+    name: str
+
+class Message(SQLModel,table=True):
+    __tablename__ = "message"
+    id:int = Field(default=None, primary_key=True)
+    chat_id:int = Field(foreign_key="chat.id")
+    user_id:int = Field(foreign_key="user.id")
+    content: str
+    role: str
+
+class Session(SQLModel,table=True):
+    __tablename__ = "session"
+    id:int = Field(default=None, primary_key=True)
+    user_id:int = Field(foreign_key="user.id")
+    created_at: datetime = Field(default=datetime.now())
+    expires_after: int = Field(default=3600)
 
 
