@@ -7,12 +7,14 @@ from sqlalchemy.orm import Session
 from pydantic import BaseModel
 from app.models import User
 from app.routes.user_routes import router as user_router
+from app.routes.chat_routes import router as chat_router
 
 SQLModel.metadata.create_all(engine)
 
 app = FastAPI()
 
 app.include_router(user_router)
+app.include_router(chat_router)
 
 
 
