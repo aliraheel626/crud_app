@@ -8,8 +8,9 @@ from pydantic import BaseModel
 from app.models import User
 from app.routes.user_routes import router as user_router
 from app.routes.chat_routes import router as chat_router
+import app.database
 
-SQLModel.metadata.create_all(engine)
+
 
 app = FastAPI()
 

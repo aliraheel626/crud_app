@@ -7,6 +7,7 @@ from pydantic import BaseModel, ConfigDict
 from app.models import User
 from app.models import Chat
 from fastapi import HTTPException
+from sqlalchemy.ext.asyncio import AsyncSession
 router = APIRouter()
 
 
@@ -57,4 +58,8 @@ def delete_chat(chat_id: int, db: Session = Depends(get_db), user: User = Depend
     return chat
 
 @router.get("/chat/{chat_id}/messages")
+def get_chat_messages(chat_id: int, db: Session = Depends(get_db), user: User = Depends(get_current_user)):
+    messages = db.query(Message).filter(Message.chat_id == chat_id).all()
+    return messages
+
 
